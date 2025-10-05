@@ -6,4 +6,35 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+    <ItemGroup>
+        <PackageReference Include="Dexlaris.EmailKit" Version="1.0.3" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.9" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.9">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
+        <PackageReference Include="Scalar.AspNetCore" Version="2.8.10" />
+        <PackageReference Include="Serilog.AspNetCore" Version="9.0.0"/>
+        <PackageReference Include="Serilog.Enrichers.Environment" Version="3.0.1"/>
+        <PackageReference Include="Serilog.Enrichers.Thread" Version="4.0.0"/>
+        <PackageReference Include="Serilog.Settings.Configuration" Version="9.0.0"/>
+        <PackageReference Include="Serilog.Sinks.Async" Version="2.1.0"/>
+        <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0"/>
+        <PackageReference Include="Serilog.Sinks.Seq" Version="9.0.0"/>
+        <PackageReference Include="SixLabors.ImageSharp" Version="3.1.11" />
+    </ItemGroup>
+    
+  <ItemGroup>
+    <Folder Include="Common\Extensions\" />
+    <Folder Include="Core\Abstractions\" />
+    <Folder Include="Core\DTOs\" />
+    <Folder Include="Core\Entities\" />
+    <Folder Include="Endpoints\Bookings\" />
+    <Folder Include="Endpoints\Clients\" />
+    <Folder Include="Infrastructure\Background\" />
+    <Folder Include="Infrastructure\Integrations\Email\" />
+    <Folder Include="Infrastructure\Persistence\" />
+  </ItemGroup>
+
 </Project>
