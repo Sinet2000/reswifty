@@ -1,4 +1,4 @@
-namespace Reswifty.API.Infrastructure.Config;
+namespace Reswifty.API.Options;
 
 public record LoggingConfig
 {

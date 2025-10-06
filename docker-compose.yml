@@ -1,0 +1,41 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: reswifty_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: reswifty_db
+      POSTGRES_USER: atlas
+      POSTGRES_PASSWORD: P@ssw0xsa123rd123.
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U atlas -d reswifty_db"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  api:
+    build: ./src/Reswifty.API
+    container_name: reswifty_api
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_URLS: http://0.0.0.0:5000
+      DOTNET_ENVIRONMENT: Development
+      ConnectionStrings__AppDb: Host=db;Port=5432;Database=reswifty_db;Username=atlas;Password=P@ssw0xsa123rd123.;Include Error Detail=true
+      # Email (optional; fill in later)
+      Email__Host: smtp.host
+      Email__Port: "587"
+      Email__EnableSsl: "true"
+      Email__UserName: no-reply@yourdomain.com
+      Email__Password: "change-me"
+      Email__From: no-reply@yourdomain.com
+      Email__DisplayName: Reswifty Mailer
+    ports:
+      - "5000:5000"
+volumes:
+  dbdata:

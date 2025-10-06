@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using Reswifty.API.Infrastructure.Config;
+using Reswifty.API.Options;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;

@@ -1,4 +1,9 @@
+using System.Globalization;
+using Dexlaris.EmailKit.Setup;
+using Microsoft.AspNetCore.Localization;
+using Reswifty.API.Infrastructure.Extensions;
 using Reswifty.API.Infrastructure.Logging;
+using Reswifty.API.Options;
 using Serilog;
 using Serilog.Events;
 
@@ -24,7 +29,7 @@ public class Program
         {
             var builder = WebApplication.CreateBuilder(args);
             builder.ConfigureSerilog();
-            
+
             builder.Services.ConfigureAppSettings(builder.Configuration);
 
             var apiConfig = builder.Configuration.GetSection(ApiConfig.SectionName).Get<ApiConfig>();
@@ -38,6 +43,17 @@ public class Program
                 options.SupportedCultures = supportedCultures;
                 options.SupportedUICultures = supportedCultures;
             });
+
+            builder.Services.ConfigureDatabase(builder.Configuration, builder.Environment);
+
+            builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddMemoryCache();
+
+            builder.Services.AddHttpContextAccessor();
+
+            MailSenderSetup.Configure(builder.Services);
+            builder.Services.AddScoped<IEmailService, EmailService>();
+            builder.Services.AddTransient<IEmailBgRunnerService, EmailDispatcher>();
         }
         catch (Exception ex)
         {
