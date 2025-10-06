@@ -1,6 +1,9 @@
 using System.Globalization;
 using Dexlaris.EmailKit.Setup;
 using Microsoft.AspNetCore.Localization;
+using Reswifty.API.Application.Abstractions.Messaging;
+using Reswifty.API.Infrastructure;
+using Reswifty.API.Infrastructure.Email;
 using Reswifty.API.Infrastructure.Extensions;
 using Reswifty.API.Infrastructure.Logging;
 using Reswifty.API.Options;
@@ -51,9 +54,20 @@ public class Program
 
             builder.Services.AddHttpContextAccessor();
 
+            builder.Services.AddInfrastructure(builder.Configuration);
+
             MailSenderSetup.Configure(builder.Services);
-            builder.Services.AddScoped<IEmailService, EmailService>();
-            builder.Services.AddTransient<IEmailBgRunnerService, EmailDispatcher>();
+            // builder.Services.AddScoped<IEmailService, EmailService>();
+            // builder.Services.AddTransient<IEmailBgRunnerService, EmailDispatcher>();
+
+            builder.AddServiceDefaults();
+            builder.Services.AddProblemDetails();
+            builder.AddDefaultOpenApi(builder.Services.AddApiVersioning(options =>
+            {
+                options.DefaultApiVersion = new ApiVersion(1, 0); // ← your default
+                options.AssumeDefaultVersionWhenUnspecified = true; // ← magic line
+                options.ReportApiVersions = true;
+            }));
         }
         catch (Exception ex)
         {

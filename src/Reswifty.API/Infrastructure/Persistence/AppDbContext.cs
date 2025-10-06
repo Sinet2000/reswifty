@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using Reswifty.API.Application.Abstractions.Persistence;
 using Reswifty.API.Domain.Companies;
 
 namespace Reswifty.API.Infrastructure.Persistence;
 
-public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
+public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options), IAppDbContext
 {
     public DbSet<Company> Companies => Set<Company>();
 
@@ -12,4 +13,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         b.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
         base.OnModelCreating(b);
     }
+
+    Task<int> IAppDbContext.SaveChangesAsync(CancellationToken ct) => base.SaveChangesAsync(ct);
 }

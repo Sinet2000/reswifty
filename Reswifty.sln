@@ -7,6 +7,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F0437004-63E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reswifty.API", "src\Reswifty.API\Reswifty.API.csproj", "{4824AF72-435E-4B7B-89D2-A29DAAC60F0D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reswifty.AppHost", "src\Reswifty.AppHost\Reswifty.AppHost.csproj", "{488F6E2A-165B-45E8-85EB-55DB80B0B7FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reswifty.ServiceDefaults", "src\Reswifty.ServiceDefaults\Reswifty.ServiceDefaults.csproj", "{99074450-ED8C-4134-A606-EA748F4E6D11}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,11 +21,21 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4824AF72-435E-4B7B-89D2-A29DAAC60F0D} = {F0437004-63EF-4ED6-9FD9-6C3125E39889}
+		{488F6E2A-165B-45E8-85EB-55DB80B0B7FD} = {F0437004-63EF-4ED6-9FD9-6C3125E39889}
+		{99074450-ED8C-4134-A606-EA748F4E6D11} = {F0437004-63EF-4ED6-9FD9-6C3125E39889}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{4824AF72-435E-4B7B-89D2-A29DAAC60F0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4824AF72-435E-4B7B-89D2-A29DAAC60F0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4824AF72-435E-4B7B-89D2-A29DAAC60F0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4824AF72-435E-4B7B-89D2-A29DAAC60F0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{488F6E2A-165B-45E8-85EB-55DB80B0B7FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{488F6E2A-165B-45E8-85EB-55DB80B0B7FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{488F6E2A-165B-45E8-85EB-55DB80B0B7FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{488F6E2A-165B-45E8-85EB-55DB80B0B7FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99074450-ED8C-4134-A606-EA748F4E6D11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99074450-ED8C-4134-A606-EA748F4E6D11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99074450-ED8C-4134-A606-EA748F4E6D11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99074450-ED8C-4134-A606-EA748F4E6D11}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
