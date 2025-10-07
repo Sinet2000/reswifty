@@ -1,6 +1,6 @@
 using Serilog.Context;
 
-namespace Reswifty.API.Infrastructure.Logging;
+namespace Reswifty.API.Middlewares;
 
 public class LoggingEnrichmentMiddleware(RequestDelegate next)
 {
