@@ -16,8 +16,8 @@ namespace Reswifty.API.Infrastructure.Identity;
 
 public static class IdentityCoreSetup
 {
-    public static IServiceCollection Configure<TContext>(
-        IServiceCollection services, ConfigurationManager config, IEnumerable<string>? adminPermissions = null)
+    public static IServiceCollection Configure(
+        IServiceCollection services, IConfiguration config, IEnumerable<string>? adminPermissions = null)
     {
         var authConfigSection = config.GetSection(AuthenticationOptions.SectionName);
         services.Configure<AuthenticationOptions>(authConfigSection);
@@ -36,6 +36,8 @@ public static class IdentityCoreSetup
 
         services.AddJwtAuthentication(authConfig.Jwt);
 
+        services.AddHttpContextAccessor();
+
         services.AddAuthorizationBuilder()
             .AddPolicy("RequireAdminRole", policy =>
                 policy.RequireRole("Admin"));
@@ -44,7 +46,7 @@ public static class IdentityCoreSetup
             .AddScoped<IIdentityService, IdentityService>()
             .AddScoped<IAuthService, AuthService>()
             .AddScoped<IIdentityUrlBuilder, IdentityUrlBuilder>()
-            .AddSingleton<ICurrentUserAccessor, CurrentUserAccessor>();
+            .AddScoped<ICurrentUserAccessor, CurrentUserAccessor>();
     }
 
     private static IServiceCollection RegisterIdentity(this IServiceCollection services)

@@ -9,7 +9,7 @@ public interface IAuthService
 {
     Task<AuthResult> LoginAsync(LoginCommand command, CancellationToken ct = default);
 
-    // Task<Result<AuthResult>> RefreshAsync(RefreshTokenCommand command, CancellationToken ct = default);
+    Task<AuthResult> RefreshAsync(RefreshTokenCommand command, CancellationToken ct = default);
     // Task<Result> LogoutAsync(Guid userId, CancellationToken ct = default);
     // Task<Result> RevokeRefreshTokenAsync(string refreshToken, CancellationToken ct = default);
 }

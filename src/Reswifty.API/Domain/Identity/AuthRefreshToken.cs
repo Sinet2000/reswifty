@@ -4,9 +4,7 @@ namespace Reswifty.API.Domain.Identity;
 
 public sealed class AuthRefreshToken
 {
-    private AuthRefreshToken()
-    {
-    }
+    private AuthRefreshToken() { }
 
     public AuthRefreshToken(
         int userId,
@@ -43,7 +41,7 @@ public sealed class AuthRefreshToken
     [Required, MaxLength(512)]
     public string Hash { get; private set; } = null!;
 
-    [Required, MaxLength(512)]
+    [Required, MaxLength(256)] // <- match guard above
     public string Salt { get; private set; } = null!;
 
     public DateTime ExpiresAtUtc { get; private set; }
@@ -56,7 +54,7 @@ public sealed class AuthRefreshToken
     [MaxLength(256)]
     public string? UserAgent { get; private set; }
 
-    public bool IsRevoked { get; private set; } = false;
+    public bool IsRevoked { get; private set; }
 
     public DateTime? RevokedAt { get; private set; }
 
@@ -68,11 +66,9 @@ public sealed class AuthRefreshToken
 
     public bool IsActive => !IsRevoked && DateTime.UtcNow <= ExpiresAtUtc;
 
-    // DDD-style behaviors
     public void Revoke(string? revokedByIp = null, string? replacedByToken = null)
     {
         if (IsRevoked) return;
-
         IsRevoked = true;
         RevokedAt = DateTime.UtcNow;
         RevokedByIp = revokedByIp?.Trim();

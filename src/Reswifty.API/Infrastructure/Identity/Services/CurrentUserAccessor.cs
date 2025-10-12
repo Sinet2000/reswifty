@@ -1,70 +1,59 @@
-using System.Security;
 using System.Security.Claims;
-using System.Security.Principal;
+using System.Security;
 using Reswifty.API.Application.Abstractions.Identity;
 using Reswifty.ServiceDefaults;
 
 namespace Reswifty.API.Infrastructure.Identity.Services;
 
-public class CurrentUserAccessor(IHttpContextAccessor httpContextAccessor) : ICurrentUserAccessor
+public sealed class CurrentUserAccessor(IHttpContextAccessor http) : ICurrentUserAccessor
 {
+    private static readonly ClaimsPrincipal SystemPrincipal =
+        new(new ClaimsIdentity([new Claim(ClaimTypes.Name, SystemUserName)], authenticationType: null));
+
     private const string SystemUserName = "system";
 
-    public bool IsAuthenticated()
+    public ClaimsPrincipal Principal =>
+        http.HttpContext?.User ?? SystemPrincipal;
+
+    public bool IsAuthenticated =>
+        Principal.Identity?.IsAuthenticated ?? false;
+
+    public bool IsSystem =>
+        !IsAuthenticated;
+
+    public string? TryGetUserName()
     {
-        var principal = User();
+        if (!IsAuthenticated) return SystemUserName;
 
-        if (principal is GenericPrincipal)
-        {
-            return false;
-        }
-
-        return principal.Identity?.IsAuthenticated == true;
+        // Prefer Name, then preferred_username, then Email
+        return Principal.FindFirstValue(ClaimTypes.Name)
+               ?? Principal.FindFirstValue("preferred_username")
+               ?? Principal.FindFirstValue(ClaimTypes.Email)
+               ?? SystemUserName;
     }
 
-    public string UserName()
+    public string GetRequiredUserName()
+        => TryGetUserName() ?? SystemUserName;
+
+    public int? TryGetUserId()
     {
-        var principal = User();
+        if (!IsAuthenticated) return null;
 
-        if (principal is GenericPrincipal)
-        {
-            return SystemUserName;
-        }
+        var raw = Principal.FindFirstValue(ClaimTypes.NameIdentifier)
+                  ?? Principal.FindFirstValue("sub"); // some IdPs only set 'sub'
 
-        return principal.Identity?.IsAuthenticated == true
-            ? principal.UserName() ?? string.Empty
-            : SystemUserName;
+        return int.TryParse(raw, out var id) ? id : null;
     }
 
-    public int UserId()
+    public int GetRequiredUserId()
+        => TryGetUserId() ?? throw new SecurityException("Authenticated user id is missing or invalid.");
+
+    public string? TryGetEmail()
     {
-        var principal = User();
-
-        ValidateUserIsAuthenticated(principal);
-
-        return principal.UserId();
+        if (!IsAuthenticated) return null;
+        return Principal.FindFirstValue(ClaimTypes.Email);
     }
 
-    public string Email()
-    {
-        var principal = User();
-        ValidateUserIsAuthenticated(principal);
-
-        return principal.UserEmail() ?? throw new Exception("User is not authenticated");
-    }
-
-    private static void ValidateUserIsAuthenticated(ClaimsPrincipal principal)
-    {
-        if (principal is GenericPrincipal || principal.Identity?.IsAuthenticated == false)
-        {
-            throw new SecurityException("User must be authenticated");
-        }
-    }
-
-    private ClaimsPrincipal User()
-    {
-        return httpContextAccessor.HttpContext is not null
-            ? httpContextAccessor.HttpContext.User
-            : new GenericPrincipal(new GenericIdentity(SystemUserName), null);
-    }
+    public string GetRequiredEmail()
+        => TryGetEmail() ?? throw new SecurityException("Authenticated user email is missing.");
 }

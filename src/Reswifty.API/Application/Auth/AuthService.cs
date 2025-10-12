@@ -30,4 +30,7 @@ internal sealed class AuthService(IMediator mediator) : IAuthService
 {
     public Task<AuthResult> LoginAsync(LoginCommand command, CancellationToken ct = default)
         => mediator.Send(command, ct);
+
+    public Task<AuthResult> RefreshAsync(RefreshTokenCommand command, CancellationToken ct = default)
+        => mediator.Send(command, ct);
 }

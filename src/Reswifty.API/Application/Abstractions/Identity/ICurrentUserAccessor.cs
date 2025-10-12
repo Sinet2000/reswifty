@@ -1,12 +1,20 @@
+using System.Security.Claims;
+
 namespace Reswifty.API.Application.Abstractions.Identity;
 
 public interface ICurrentUserAccessor
 {
-    bool IsAuthenticated();
+    bool IsAuthenticated { get; }
+    bool IsSystem { get; }
 
-    string UserName();
+    string? TryGetUserName();
+    string GetRequiredUserName();
 
-    int UserId();
+    int? TryGetUserId();
+    int GetRequiredUserId();
 
-    string Email();
+    string? TryGetEmail();
+    string GetRequiredEmail();
+
+    ClaimsPrincipal Principal { get; }
 }

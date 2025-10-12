@@ -57,12 +57,6 @@ public static class DependencyInjection
         // Validators (optional but common)
         // services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly);
 
-        // Add the authentication services to DI
-        builder.AddDefaultAuthentication();
-
-        services.AddHttpContextAccessor();
-        services.AddTransient<IIdentityService, IdentityService>();
-
         services.AddScoped<ICompanyService, CompanyService>();
 
         // Pipeline behaviors (optional)
@@ -74,6 +68,8 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration config)
     {
         // e.g., email, caching, blob storage, etc.
+        IdentityCoreSetup.Configure(services, config);
+
         return services;
     }
 }
