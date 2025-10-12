@@ -4,9 +4,16 @@ namespace Reswifty.ServiceDefaults;
 
 public static class ClaimsPrincipalExtensions
 {
-    public static string? GetUserId(this ClaimsPrincipal principal)
-        => principal.FindFirst("sub")?.Value;
+    public static int UserId(this ClaimsPrincipal principal)
+    {
+        var userIdClaimValue = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-    public static string? GetUserName(this ClaimsPrincipal principal) =>
-        principal.FindFirst(x => x.Type == ClaimTypes.Name)?.Value;
+        return int.TryParse(userIdClaimValue, out var userId) ? userId : throw new Exception("Invalid user id");
+    }
+
+    public static string? UserName(this ClaimsPrincipal principal)
+        => principal.FindFirst(ClaimTypes.Name)?.Value;
+
+    public static string? UserEmail(this ClaimsPrincipal principal)
+        => principal.FindFirst(ClaimTypes.Email)?.Value;
 }

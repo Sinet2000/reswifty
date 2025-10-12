@@ -17,7 +17,7 @@ public static class LoggingSetup
 
     public static void ConfigureSerilog(this WebApplicationBuilder builder)
     {
-        var loggingConfig = builder.Configuration.GetSection(LoggingConfig.SectionName).Get<LoggingConfig>();
+        var loggingConfig = builder.Configuration.GetSection(LoggingOptions.SectionName).Get<LoggingOptions>();
         ArgumentNullException.ThrowIfNull(loggingConfig);
 
         builder.Host.UseSerilog((context, services, configuration) =>

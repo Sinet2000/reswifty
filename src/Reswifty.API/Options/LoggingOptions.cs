@@ -1,6 +1,6 @@
 namespace Reswifty.API.Options;
 
-public record LoggingConfig
+public record LoggingOptions
 {
     public const string SectionName = "LoggingConfig";
 

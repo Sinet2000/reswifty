@@ -1,11 +1,14 @@
+using System.ComponentModel.DataAnnotations;
 using Reswifty.API.Domain.Common;
 
 namespace Reswifty.API.Domain.Companies;
 
 public class Company : BaseEntity
 {
-    public string Name { get; private set; } = default!;
+    [StringLength(512)]
+    public string Name { get; private set; } = null!;
     public CompanyType Type { get; private set; }
+    [StringLength(2024)]
     public string? Description { get; private set; }
     public bool IsActive { get; private set; } = true;
 

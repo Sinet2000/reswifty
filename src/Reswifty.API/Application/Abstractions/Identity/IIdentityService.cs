@@ -1,8 +1,6 @@
 namespace Reswifty.API.Application.Abstractions.Identity;
 
-public interface IIdentityService
+public class IIdentityService
 {
-    string GetUserIdentity();
-
-    string GetUserName();
+    
 }

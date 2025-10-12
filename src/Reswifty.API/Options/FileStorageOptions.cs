@@ -2,7 +2,7 @@ using Dexlaris.Core.Exceptions;
 
 namespace Reswifty.API.Options;
 
-public record FileStorageConfig
+public record FileStorageOptions
 {
     public const string SectionName = "FileStorageConfig";
 

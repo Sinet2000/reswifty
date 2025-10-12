@@ -4,6 +4,7 @@ using Reswifty.API.Application.Common;
 using Reswifty.API.Application.Companies.DTOs;
 using Reswifty.API.Application.Companies.Services;
 using Reswifty.API.Common;
+using Reswifty.API.Contracts.Common;
 
 namespace Reswifty.API.Endpoints;
 

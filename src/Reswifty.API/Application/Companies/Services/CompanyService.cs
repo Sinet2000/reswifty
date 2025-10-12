@@ -4,6 +4,7 @@ using Reswifty.API.Application.Abstractions.Repositories;
 using Reswifty.API.Application.Common;
 using Reswifty.API.Application.Companies.DTOs;
 using Reswifty.API.Application.Companies.Mapping;
+using Reswifty.API.Contracts.Common;
 using Reswifty.API.Domain.Companies;
 
 namespace Reswifty.API.Application.Companies.Services;

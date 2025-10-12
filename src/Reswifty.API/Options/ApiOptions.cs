@@ -1,6 +1,6 @@
 namespace Reswifty.API.Options;
 
-public record ApiConfig
+public record ApiOptions
 {
     public const string SectionName = "ApiConfig";
 
